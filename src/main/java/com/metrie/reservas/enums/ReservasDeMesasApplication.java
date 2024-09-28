@@ -1,4 +1,4 @@
-package com.metrie.reservas;
+package com.metrie.reservas.enums;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
