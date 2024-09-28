@@ -7,7 +7,11 @@ import java.util.UUID;
 import com.metrie.reservas.enums.TipoDeCozinhaEnum;
 
 import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -15,12 +19,15 @@ import lombok.NoArgsConstructor;
 import lombok.NonNull;
 
 @Getter
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
+@Entity
+@Table(name="RESTAURANTES")
 public class RestauranteEntity {
 
     @Id
     @Column
+    @GeneratedValue()
     private UUID id;
 
     @Column(nullable = false)
@@ -58,5 +65,4 @@ public class RestauranteEntity {
         }
         this.regiao = regiao;
     }
-
 }
