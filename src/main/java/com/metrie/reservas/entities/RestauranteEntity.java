@@ -3,7 +3,7 @@ package com.metrie.reservas.entities;
 import java.time.LocalTime;
 import java.util.UUID;
 
-import com.TipoDeCozinhaEnum;
+import com.metrie.reservas.enums.TipoDeCozinhaEnum;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Id;
