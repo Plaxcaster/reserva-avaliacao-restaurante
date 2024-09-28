@@ -26,4 +26,36 @@ public class RestauranteEntityTest {
         assertThat(restaurante.getRegiao()).isEqualTo("regiao");
         assertThat(restaurante.getTipoDeCozinha()).isEqualTo(TipoDeCozinhaEnum.CHINESA);
     }
+
+    @Test
+    void nomeDoRestauranteNaoPodeSerNulo() {
+        RestauranteEntity resturante = new RestauranteEntity();
+        assertThatThrownBy(() -> {
+            resturante.setNome(null);
+        }).isInstanceOf(Exception.class);
+    }
+
+    @Test
+    void nomeDoRestauranteNaoPodeSerVazio() {
+        RestauranteEntity resturante = new RestauranteEntity();
+        assertThatThrownBy(() -> {
+            resturante.setNome("");
+        }).isInstanceOf(Exception.class);
+    }
+
+    @Test
+    void regiaoDoRestauranteNaoPodeSerNulo() {
+        RestauranteEntity resturante = new RestauranteEntity();
+        assertThatThrownBy(() -> {
+            resturante.setRegiao(null);
+        }).isInstanceOf(Exception.class);
+    }
+
+    @Test
+    void regiaoDoRestauranteNaoPodeSerVazio() {
+        RestauranteEntity resturante = new RestauranteEntity();
+        assertThatThrownBy(() -> {
+            resturante.setRegiao("");
+        }).isInstanceOf(Exception.class);
+    }
 }
