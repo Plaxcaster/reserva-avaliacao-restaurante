@@ -1,6 +1,5 @@
 package com.metrie.reservas.controllers;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.security.InvalidParameterException;
@@ -16,7 +15,6 @@ public class CadastrarRestauranteController {
 
     RestaurantesRepository restaurantesRepository;
     
-    @Autowired
     public CadastrarRestauranteController(RestaurantesRepository restaurantesRepository) {
         this.restaurantesRepository = restaurantesRepository;
     }
