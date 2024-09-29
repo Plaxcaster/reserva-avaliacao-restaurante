@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.metrie.reservas.entities.RestauranteEntity;
-import com.metrie.reservas.services.CadastrarRestauranteService;
+import com.metrie.reservas.usecases.CadastrarRestauranteUseCases;
 
 import org.springframework.web.bind.annotation.PostMapping;
 
@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 public class MainGateway {
 
     @Autowired 
-    private CadastrarRestauranteService cadastrarRestauranteService;
+    private CadastrarRestauranteUseCases cadastrarRestauranteUseCase;
 
     @GetMapping()
     public ResponseEntity<String> HelloWorld() {
@@ -27,8 +27,6 @@ public class MainGateway {
 
     @PostMapping("/restaurantePadrao")
     public ResponseEntity<RestauranteEntity> postMethodName(String nomeString , String regiaoString , String tipoCozinhaString) {
-        return ResponseEntity.ok(cadastrarRestauranteService.cadastrarRestaurante(nomeString , regiaoString, tipoCozinhaString));
+        return ResponseEntity.ok(cadastrarRestauranteUseCase.cadastrarRestaurante(nomeString , regiaoString, tipoCozinhaString));
     }
-    
-
 }

@@ -9,20 +9,17 @@ import com.metrie.reservas.enums.TipoDeCozinhaEnum;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotEmpty;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 
 @Getter
-@AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name="RESTAURANTES")
+@Table(name = "RESTAURANTES")
 public class RestauranteEntity {
 
     @Id
@@ -49,20 +46,40 @@ public class RestauranteEntity {
     private LocalTime horarioFechamento;
 
     public void setNome(String nome) {
-        if (nome.isEmpty()) {
-            throw new InvalidParameterException("nome não pode ser vazio");
-        }
+        validarNome(nome);
         this.nome = nome;
     }
-    
-    public void setTipoDeCozinha(TipoDeCozinhaEnum tipoDeCozinha){
+
+    public void setTipoDeCozinha(TipoDeCozinhaEnum tipoDeCozinha) {
         this.tipoDeCozinha = tipoDeCozinha;
     }
-    
-    public void setRegiao(String regiao){
-        if (regiao.isEmpty()) {
+
+    public void setRegiao(String regiao) {
+        validarRegiao(regiao);
+        this.regiao = regiao;
+    }
+
+    public RestauranteEntity(String nome, String regiao, LocalTime horarioAbertura,
+            LocalTime horarioFechamento, TipoDeCozinhaEnum tipoDeCozinhaEnum) {
+        validarNome(nome);
+        validarRegiao(regiao);
+
+        this.nome = nome;
+        this.regiao = regiao;
+        this.horarioAbertura = horarioAbertura;
+        this.horarioFechamento = horarioFechamento;
+        this.tipoDeCozinha = tipoDeCozinhaEnum;
+    }
+
+    private void validarNome(String nome) {
+        if (nome.isBlank() || nome == null) {
+            throw new InvalidParameterException("nome não pode ser vazio");
+        }
+    }
+
+    private void validarRegiao(String regiao) {
+        if (regiao.isBlank() || regiao == null) {
             throw new InvalidParameterException("regiao não pode ser vazio");
         }
-        this.regiao = regiao;
     }
 }
