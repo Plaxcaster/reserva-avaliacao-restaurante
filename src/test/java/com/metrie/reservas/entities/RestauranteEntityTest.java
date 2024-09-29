@@ -6,6 +6,8 @@ import com.metrie.reservas.enums.TipoDeCozinhaEnum;
 
 import static org.assertj.core.api.Assertions.*;
 
+import java.time.LocalTime;
+
 public class RestauranteEntityTest {
 
     @Test
@@ -57,5 +59,27 @@ public class RestauranteEntityTest {
         assertThatThrownBy(() -> {
             resturante.setRegiao("");
         }).isInstanceOf(Exception.class);
+    }
+
+    @Test
+    void funcaoVerificaAberturaFuncionaParaAberturaAntesDoFechamento() {
+        var restaurante = new RestauranteEntity();
+        restaurante.setHorarioAbertura(LocalTime.of(10, 0));
+        restaurante.setHorarioFechamento(LocalTime.of(14, 0));
+
+        assertThat(restaurante.estaAberto(LocalTime.of(12, 0))).isTrue();
+        assertThat(restaurante.estaAberto(LocalTime.of(9, 0))).isFalse();
+        assertThat(restaurante.estaAberto(LocalTime.of(15, 0))).isFalse();
+    }
+
+    @Test
+    void funcaoVerificaAberturaFuncionaParaFechamentoAntesDaAbertura() {
+        var restaurante = new RestauranteEntity();
+        restaurante.setHorarioAbertura(LocalTime.of(14, 0));
+        restaurante.setHorarioFechamento(LocalTime.of(10, 0));
+
+        assertThat(restaurante.estaAberto(LocalTime.of(12, 0))).isFalse();
+        assertThat(restaurante.estaAberto(LocalTime.of(9, 59))).isTrue();
+        assertThat(restaurante.estaAberto(LocalTime.of(14, 1))).isTrue();
     }
 }

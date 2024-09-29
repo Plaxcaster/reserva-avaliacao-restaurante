@@ -50,13 +50,21 @@ public class RestauranteEntity {
         this.nome = nome;
     }
 
+    public void setRegiao(String regiao) {
+        validarRegiao(regiao);
+        this.regiao = regiao;
+    }
+
     public void setTipoDeCozinha(TipoDeCozinhaEnum tipoDeCozinha) {
         this.tipoDeCozinha = tipoDeCozinha;
     }
 
-    public void setRegiao(String regiao) {
-        validarRegiao(regiao);
-        this.regiao = regiao;
+    public void setHorarioAbertura(LocalTime horario) {
+        this.horarioAbertura = horario;
+    }
+
+    public void setHorarioFechamento(LocalTime horario) {
+        this.horarioFechamento = horario;
     }
 
     public RestauranteEntity(String nome, String regiao, LocalTime horarioAbertura,
@@ -69,6 +77,14 @@ public class RestauranteEntity {
         this.horarioAbertura = horarioAbertura;
         this.horarioFechamento = horarioFechamento;
         this.tipoDeCozinha = tipoDeCozinhaEnum;
+    }
+
+    public boolean estaAberto(LocalTime horario) {
+        if (this.horarioFechamento.isAfter(this.horarioAbertura)) {
+            return horario.isAfter(this.horarioAbertura) && horario.isBefore(this.horarioFechamento);
+        } else {
+            return horario.isAfter(this.horarioAbertura) || horario.isBefore(this.horarioFechamento);
+        }
     }
 
     private void validarNome(String nome) {
