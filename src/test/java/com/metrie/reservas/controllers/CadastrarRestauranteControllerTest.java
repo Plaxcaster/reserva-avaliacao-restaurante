@@ -42,11 +42,11 @@ public class CadastrarRestauranteControllerTest {
     @Test
     void CadastrarRestauranteDeveEsperarHorarioEntradaFormatado() {
         assertThatThrownBy(() -> {
-            controller.cadastrarRestaurante("nome", "regiao", "CHINESA", "02AM", "12:10");
+            controller.cadastrarRestaurante("nome", "regiao", "CHINESA", "02AM", "12:10" , "1");
         }).isInstanceOf(InvalidParameterException.class);
 
         assertThatThrownBy(() -> {
-            controller.cadastrarRestaurante("nome", "regiao", "CHINESA", " ", "12:10");
+            controller.cadastrarRestaurante("nome", "regiao", "CHINESA", " ", "12:10" , "1");
         }).isInstanceOf(InvalidParameterException.class);
 
     }
@@ -54,11 +54,11 @@ public class CadastrarRestauranteControllerTest {
     @Test
     void CadastrarRestauranteDeveEsperarHorarioFechamentoFormatado() {
         assertThatThrownBy(() -> {
-            controller.cadastrarRestaurante("nome", "regiao", "CHINESA", "10:00", "10AM");
+            controller.cadastrarRestaurante("nome", "regiao", "CHINESA", "10:00", "10AM" , "1");
         }).isInstanceOf(InvalidParameterException.class);
 
         assertThatThrownBy(() -> {
-            controller.cadastrarRestaurante("nome", "regiao", "CHINESA", "10:00", "1000");
+            controller.cadastrarRestaurante("nome", "regiao", "CHINESA", "10:00", "1000" , "1");
         }).isInstanceOf(InvalidParameterException.class);
     }
 
@@ -67,7 +67,7 @@ public class CadastrarRestauranteControllerTest {
 
         when(repository.save(any())).thenReturn(criaRestaurante());
 
-        var restauranteCadastrado = controller.cadastrarRestaurante("nome","regiao","CHINESA","12:00","00:00");
+        var restauranteCadastrado = controller.cadastrarRestaurante("nome","regiao","CHINESA","12:00","00:00", "1" );
 
         assertThat(restauranteCadastrado).isNotNull();
 
@@ -77,11 +77,9 @@ public class CadastrarRestauranteControllerTest {
         assertThat(restauranteCadastrado.getTipoDeCozinha()).isEqualTo(criaRestaurante().getTipoDeCozinha());
                              
         verify(repository , times(1)).save(any());
-
-        
     }
 
     private RestauranteEntity criaRestaurante() {
-        return new RestauranteEntity("nome", "regiao", LocalTime.NOON, LocalTime.MIDNIGHT, TipoDeCozinhaEnum.CHINESA);
+        return new RestauranteEntity("nome", "regiao", LocalTime.NOON, LocalTime.MIDNIGHT, TipoDeCozinhaEnum.CHINESA , 1);
     }
 }

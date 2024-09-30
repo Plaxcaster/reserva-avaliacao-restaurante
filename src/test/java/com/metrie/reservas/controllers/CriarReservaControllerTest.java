@@ -78,7 +78,7 @@ public class CriarReservaControllerTest {
     void testCriarReserva() {
         var usuario = new UsuarioEntity("Bob");
         var restaurante = new RestauranteEntity("restaurante", "Sobradinho", LocalTime.NOON, LocalTime.MIDNIGHT,
-                TipoDeCozinhaEnum.CHINESA);
+                TipoDeCozinhaEnum.CHINESA , 1);
         var reservaEsperada = new ReservaEntity(usuario, restaurante, LocalDateTime.now());
 
         when(usuarioRepository.getReferenceById(any())).thenReturn(usuario);

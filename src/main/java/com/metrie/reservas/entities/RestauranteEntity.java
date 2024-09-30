@@ -45,6 +45,9 @@ public class RestauranteEntity {
     @Column(nullable = false)
     private LocalTime horarioFechamento;
 
+    @Column(nullable = false)
+    private int capacidadeMesas;
+
     public void setNome(String nome) {
         validarNome(nome);
         this.nome = nome;
@@ -68,15 +71,17 @@ public class RestauranteEntity {
     }
 
     public RestauranteEntity(String nome, String regiao, LocalTime horarioAbertura,
-            LocalTime horarioFechamento, TipoDeCozinhaEnum tipoDeCozinhaEnum) {
+            LocalTime horarioFechamento, TipoDeCozinhaEnum tipoDeCozinhaEnum, int capacidadeMesas) {
         validarNome(nome);
         validarRegiao(regiao);
+        validarCapacidade(capacidadeMesas);
 
         this.nome = nome;
         this.regiao = regiao;
         this.horarioAbertura = horarioAbertura;
         this.horarioFechamento = horarioFechamento;
         this.tipoDeCozinha = tipoDeCozinhaEnum;
+        this.capacidadeMesas = capacidadeMesas;
     }
 
     public boolean estaAberto(LocalTime horario) {
@@ -90,6 +95,11 @@ public class RestauranteEntity {
     private void validarNome(String nome) {
         if (nome.isBlank() || nome == null) {
             throw new InvalidParameterException("nome não pode ser vazio");
+        }
+    }
+    private void validarCapacidade(int capacidade) {
+        if (capacidade < 0 ) {
+            throw new InvalidParameterException("capacidade não pode ser negativa");
         }
     }
 

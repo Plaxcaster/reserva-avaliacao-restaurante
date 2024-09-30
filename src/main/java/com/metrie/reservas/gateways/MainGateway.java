@@ -43,10 +43,10 @@ public class MainGateway {
 
     @PostMapping("/restaurante")
     public ResponseEntity<RestauranteEntity> cadastrarRestaurante(String nomeString, String regiaoString,
-            String tipoCozinhaString, String horarioAbertura, String horarioFechamento) {
+            String tipoCozinhaString, String horarioAbertura, String horarioFechamento , String capacidade) {
         return ResponseEntity
                 .ok(cadastrarRestauranteController.cadastrarRestaurante(nomeString, regiaoString, tipoCozinhaString,
-                        horarioAbertura, horarioFechamento));
+                        horarioAbertura, horarioFechamento, capacidade));
     }
 
     @PostMapping("/reserva")
