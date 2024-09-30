@@ -7,7 +7,7 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
 import com.metrie.reservas.entities.RestauranteEntity;
-import com.metrie.reservas.enums.TipoDeCozinhaEnum;
+import com.metrie.reservas.entities.TipoDeCozinhaEntity;
 import com.metrie.reservas.repositories.RestaurantesRepository;
 
 @Component
@@ -39,7 +39,7 @@ public class CadastrarRestauranteController {
         }
 
         RestauranteEntity restaurante = new RestauranteEntity(nome, regiao, horarioAberturaLocalTime, horarioFechamentoLocalTime,
-                TipoDeCozinhaEnum.valueOf(tipo));
+                TipoDeCozinhaEntity.converteTipoDeCozinha(tipo));
 
         return restaurantesRepository.save(restaurante);
     }
