@@ -1,6 +1,6 @@
 package com.metrie.reservas.entities;
 
-import java.time.LocalTime;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 import jakarta.persistence.Column;
@@ -33,9 +33,9 @@ public class ReservaEntity {
     private RestauranteEntity restaurante;
 
     @Column
-    private LocalTime horarioInicial;
+    private LocalDateTime horarioInicial;
 
-    public ReservaEntity(UsuarioEntity usuario, RestauranteEntity restaurante, LocalTime horarioInicial) {
+    public ReservaEntity(UsuarioEntity usuario, RestauranteEntity restaurante, LocalDateTime horarioInicial) {
         this.usuario = usuario;
         this.restaurante = restaurante;
         this.horarioInicial = horarioInicial;

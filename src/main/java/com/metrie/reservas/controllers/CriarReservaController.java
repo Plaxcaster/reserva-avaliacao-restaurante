@@ -1,7 +1,7 @@
 package com.metrie.reservas.controllers;
 
 import java.security.InvalidParameterException;
-import java.time.LocalTime;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.UUID;
 
@@ -38,7 +38,7 @@ public class CriarReservaController {
         UUID UUIDRestaurante = converterIdRestaurante(idRestaurante);
         RestauranteEntity restaurante = recuperarRestaurante(UUIDRestaurante);
 
-        LocalTime horarioInicio = converterHorario(stringHorarioInicio);
+        LocalDateTime horarioInicio = converterHorario(stringHorarioInicio);
 
         return criarReservaUseCase.criarReserva(usuario, restaurante, horarioInicio);
     }
@@ -59,13 +59,13 @@ public class CriarReservaController {
         }
     }
 
-    public LocalTime converterHorario(String horario) {
-        DateTimeFormatter parserHorario = DateTimeFormatter.ofPattern("H:mm");
+    public LocalDateTime converterHorario(String horario) {
+        DateTimeFormatter parserHorario = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
         try {
-            return LocalTime.parse(horario, parserHorario);
+            return LocalDateTime.parse(horario, parserHorario);
         } catch (Exception e) {
-            throw new InvalidParameterException("Horario de inicio deve ser no padrão HH:mm");
+            throw new InvalidParameterException("Horario de inicio deve ser no padrão yyyy-MM-dd HH:mm");
         }
     }
 

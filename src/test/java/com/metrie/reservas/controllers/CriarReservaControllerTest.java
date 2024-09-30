@@ -1,6 +1,8 @@
 package com.metrie.reservas.controllers;
 
 import java.security.InvalidParameterException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.UUID;
 
@@ -50,8 +52,8 @@ public class CriarReservaControllerTest {
 
     @Test
     void testConverterHorarioDeveConverterStringParaLocalTime() {
-        String tempo = "02:00";
-        var horario = LocalTime.of(02, 0);
+        String tempo = "1970-01-01 02:00";
+        var horario = LocalDateTime.of(LocalDate.EPOCH, LocalTime.of(2, 0));
 
         assertThat(controller.converterHorario(tempo)).isNotNull().isEqualTo(horario);
     }
@@ -77,13 +79,13 @@ public class CriarReservaControllerTest {
         var usuario = new UsuarioEntity("Bob");
         var restaurante = new RestauranteEntity("restaurante", "Sobradinho", LocalTime.NOON, LocalTime.MIDNIGHT,
                 TipoDeCozinhaEnum.CHINESA);
-        var reservaEsperada = new ReservaEntity(usuario, restaurante, LocalTime.now());
+        var reservaEsperada = new ReservaEntity(usuario, restaurante, LocalDateTime.now());
 
         when(usuarioRepository.getReferenceById(any())).thenReturn(usuario);
         when(restaurantesRepository.getReferenceById(any())).thenReturn(restaurante);
         when(useCase.criarReserva(any(), any(), any())).thenReturn(reservaEsperada);
 
-        assertThat(controller.criarReserva(UUID.randomUUID().toString(), UUID.randomUUID().toString(), "02:00"))
+        assertThat(controller.criarReserva(UUID.randomUUID().toString(), UUID.randomUUID().toString(), "2024-01-01 02:00"))
                 .isNotNull().isEqualTo(reservaEsperada);
     }
 }
