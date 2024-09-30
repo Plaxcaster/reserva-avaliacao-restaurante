@@ -1,5 +1,7 @@
 package com.metrie.reservas.gateways;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -8,12 +10,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.metrie.reservas.controllers.CadastrarRestauranteController;
 import com.metrie.reservas.controllers.CadastrarUsuarioController;
+import com.metrie.reservas.controllers.ConsultarRestaurantesController;
 import com.metrie.reservas.controllers.CriarReservaController;
 import com.metrie.reservas.entities.ReservaEntity;
 import com.metrie.reservas.entities.RestauranteEntity;
 import com.metrie.reservas.entities.UsuarioEntity;
 
 import org.springframework.web.bind.annotation.PostMapping;
+
 
 /*Criei um fat gateway, se precisarmos dividir no futuro tudo bem */
 @RestController
@@ -28,6 +32,9 @@ public class MainGateway {
 
     @Autowired
     private CadastrarUsuarioController cadastrarUsuarioController;
+
+    @Autowired
+    private ConsultarRestaurantesController consultarRestaurantesController;
 
     @GetMapping()
     public ResponseEntity<String> HelloWorld() {
@@ -50,5 +57,18 @@ public class MainGateway {
     @PostMapping("/usuario")
     public ResponseEntity<UsuarioEntity> cadastrarUsuario(String nome) {
         return ResponseEntity.ok(cadastrarUsuarioController.cadastrarUsuario(nome));
+    }
+
+    @GetMapping("/restaurantePorNome")
+    public ResponseEntity<List<RestauranteEntity>> listaRestaurantePorNome(String nomeString) {
+        return ResponseEntity.ok(consultarRestaurantesController.listaRestaurantePorNome(nomeString));
+    }
+    @GetMapping("/restaurantePorRegiao")
+    public ResponseEntity<List<RestauranteEntity>> listaRestaurantePorRegiao(String regiaoString) {
+        return ResponseEntity.ok(consultarRestaurantesController.listaRestaurantePorRegiao(regiaoString));
+    }
+    @GetMapping("/restaurantePorTipo")
+    public ResponseEntity<List<RestauranteEntity>> listaRestaurantePorTipoDeCozinha(String tipoDeCozinhaString) {
+        return ResponseEntity.ok(consultarRestaurantesController.listaRestaurantePorTipoDeCozinha(tipoDeCozinhaString));
     }
 }
