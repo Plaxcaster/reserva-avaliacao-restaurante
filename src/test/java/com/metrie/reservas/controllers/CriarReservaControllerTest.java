@@ -6,14 +6,14 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.UUID;
 
-import static org.assertj.core.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
-
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import static org.mockito.ArgumentMatchers.any;
 import org.mockito.Mock;
+import static org.mockito.Mockito.when;
 import org.mockito.MockitoAnnotations;
 
 import com.metrie.reservas.entities.ReservaEntity;
@@ -23,6 +23,8 @@ import com.metrie.reservas.enums.TipoDeCozinhaEnum;
 import com.metrie.reservas.repositories.RestaurantesRepository;
 import com.metrie.reservas.repositories.UsuarioRepository;
 import com.metrie.reservas.usecases.CriarReservaUseCase;
+
+import jakarta.persistence.EntityNotFoundException;
 
 public class CriarReservaControllerTest {
 
@@ -87,5 +89,47 @@ public class CriarReservaControllerTest {
 
         assertThat(controller.criarReserva(UUID.randomUUID().toString(), UUID.randomUUID().toString(), "2024-01-01 02:00"))
                 .isNotNull().isEqualTo(reservaEsperada);
+    }
+
+    @Test
+    void testConverterIdUsuario_InvalidUUID() {
+        String invalidUUID = "invalid-uuid";
+        assertThatThrownBy(() -> controller.converterIdUsuario(invalidUUID))
+            .isInstanceOf(IllegalArgumentException.class)
+            .hasMessageContaining("Id do usuário em formato invalido");
+    }
+
+    @Test
+    void testConverterIdRestaurante_InvalidUUID() {
+        String invalidUUID = "invalid-uuid";
+        assertThatThrownBy(() -> controller.converterIdRestaurante(invalidUUID))
+            .isInstanceOf(IllegalArgumentException.class)
+            .hasMessageContaining("Id do usuário em formato invalido");
+    }
+
+    @Test
+    void testConverterHorario_InvalidFormat() {
+        String invalidDate = "2024-10-01 25:61";
+        assertThatThrownBy(() -> controller.converterHorario(invalidDate))
+            .isInstanceOf(InvalidParameterException.class)
+            .hasMessageContaining("Horario de inicio deve ser no padrão yyyy-MM-dd HH:mm");
+    }
+
+    @Test
+    void testRecuperarUsuario_NotFound() {
+        UUID userId = UUID.randomUUID();
+        when(usuarioRepository.getReferenceById(any(UUID.class))).thenThrow(new EntityNotFoundException());
+        assertThatThrownBy(() -> controller.recuperarUsuario(userId))
+            .isInstanceOf(IllegalArgumentException.class)
+            .hasMessageContaining("Usuario não encontrado");
+    }
+
+    @Test
+    void testRecuperarRestaurante_NotFound() {
+        UUID restauranteId = UUID.randomUUID();
+        when(restaurantesRepository.getReferenceById(any(UUID.class))).thenThrow(new EntityNotFoundException());
+        assertThatThrownBy(() -> controller.recuperarRestaurante(restauranteId))
+            .isInstanceOf(IllegalArgumentException.class)
+            .hasMessageContaining("Restaurante não encontrado");
     }
 }

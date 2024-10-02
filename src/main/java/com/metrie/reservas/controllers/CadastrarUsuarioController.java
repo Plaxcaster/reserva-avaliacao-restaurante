@@ -17,4 +17,8 @@ public class CadastrarUsuarioController {
         return usuarioRepository.save(new UsuarioEntity(nome));
     }
 
+    public UsuarioEntity retornaUsuarioPorNome(String nomeString) {
+        return usuarioRepository.findByNome(nomeString);
+    }
+
 }
