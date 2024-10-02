@@ -11,7 +11,7 @@
 	</parent>
 	<groupId>com.metrie</groupId>
 	<artifactId>reservas</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0.0</version>
 	<name>reservas de mesas</name>
 	<description>Projeto para o Tech Challenge 3 da pós graduação em arquitetura Java</description>
 	<url />
